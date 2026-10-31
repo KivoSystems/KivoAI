@@ -6,7 +6,7 @@ import {parseAgentAction} from './projectmate-tools.mjs';
 import {callModel,PROJECTMATE_VERSION} from './projectmate-cli.mjs';
 
 const chat=content=>[{role:'system',content:'You are ProjectMate.'},{role:'user',content}];
-test('v0.6.1 exposes adaptive context',()=>assert.equal(PROJECTMATE_VERSION,'0.7.0'));
+test('v0.6.1 exposes adaptive context',()=>assert.equal(PROJECTMATE_VERSION,'0.8.2'));
 test('short chat stays small, large coding context expands inside cap',()=>{
   const short=chooseContextWindow({messages:chat('Hello!'),base:1024,cap:8192,outputTokens:64});
   assert.equal(short.size,1024);

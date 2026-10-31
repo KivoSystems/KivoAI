@@ -20,7 +20,7 @@ const workspace=()=>{
 };
 
 test('version and natural coding request route',()=>{
-  assert.equal(PROJECTMATE_VERSION,'0.7.0');
+  assert.equal(PROJECTMATE_VERSION,'0.8.2');
   assert.equal(routeTask('rewrite the source code in my project').mode,'code');
   assert.equal(routeTask('inspect my project').mode,'agent');
   assert.equal(routeTask('search the web for Unity docs').action,'search');

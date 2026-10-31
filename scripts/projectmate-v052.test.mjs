@@ -7,7 +7,7 @@ import { isMetaNarration, isLoopingReply, compactSafeHistory } from './projectma
 import { relevantLessons } from './projectmate-learning.mjs';
 import { PROJECTMATE_VERSION } from './projectmate-cli.mjs';
 
-test('version and fixed splash match',()=>assert.equal(PROJECTMATE_VERSION,'0.7.0'));
+test('version and fixed splash match',()=>assert.equal(PROJECTMATE_VERSION,'0.8.2'));
 test('rejects exact non-code main.py from the incident',()=>{
   const src='The player scores a goal and the game continues.';
   assert.match(validateGeneratedCode(src,'main.py','can you write a game using pygame'),/prose/);

@@ -55,3 +55,7 @@ The installer **never clears or overwrites** `%USERPROFILE%\.projectmate-kimi\` 
 Model downloads come from Ollama and the model author's repository; confirm the model's licence before redistribution. Model downloads use disk space and an internet connection, and Windows may ask for approval to install Node.js or Ollama. File changes made later by Kivo still require their own confirmations.
 
 **Known limitation:** This batch installer was created and reviewed outside Windows; actual `winget` and Ollama installation must be tested on a Windows machine before claiming that clean-machine setup is fully verified.
+
+## Optional Smart Mode (v0.8.0)
+
+During setup you can optionally download `qwen3.5:4b` (~3.4 GB). Kivo automatically discovers installed smart models when you launch it. Use `/smart` to inspect settings, `/smart on` to enable routing, or `/smart model qwen3.5:4b` to select your model explicitly. Model switching may temporarily pause while Ollama loads the selected model. The installer never overwrites memory or pulls this model without asking.

@@ -35,6 +35,22 @@ export function isAllowedAgentAction(task, action) {
   return Boolean(action && allowedAgentActions(task).has(action.action));
 }
 
+/** Pure chat/programming questions never need file tools just because they
+ * contain words like "fix", "write", "test", or "debug". A request to modify a
+ * real file remains a separate, approval-gated operation. */
+export function isStandaloneCodeRequest(input) {
+  const text=String(input||'').trim();
+  return /^(?:(?:can|could|would|will) you (?:please )?|please )?(?:write|show|give|provide|generate)\s+(?:me\s+)?(?:an?\s+)?(?:(?:working|complete|simple|example|sample)\s+)?(?:python|javascript|typescript|java|c\+\+|c#|rust|lua|pygame)\s+(?:function|example|snippet|code\s+(?:example|snippet))\b/i.test(text)
+    && !/\b(?:save|create|edit|modify|update|overwrite)\s+(?:an?\s+|the\s+|my\s+)?(?:file|project|source|repository|repo|[\w.-]+\.(?:py|js|ts|cs))\b/i.test(text)
+    && !/\b(?:in|into|to)\s+(?:my\s+)?[\w./-]+\.(?:py|js|ts|cs)\b/i.test(text);
+}
+export function isExplanatoryRequest(input) {
+  const text=String(input||'').trim();
+  return /^(?:explain\b|why\b|how\b|what\b|tell me\b|(?:can|could|would|will) you (?:please )?(?:explain|describe|tell me|show me why|show me how)\b)/i.test(text)
+    && !/\b(?:edit|modify|change|rewrite|save|create|apply|patch)\s+(?:an?\s+|the\s+|my\s+)?(?:file|project|codebase|repo|repository|source|[\w.-]+\.(?:py|js|ts|cs))\b/i.test(text)
+    && !/\b(?:in|from|inside|of)\s+[\w./-]+\.(?:py|js|ts|cs|json|md)\b/i.test(text);
+}
+
 export function routeTask(input, {lastAction} = {}) {
   const text = String(input || '').trim();
   if (!text || text.startsWith('/')) return {mode:'chat'};
@@ -44,6 +60,7 @@ export function routeTask(input, {lastAction} = {}) {
     return {mode:'quick',action:'search',value:`latest technology hardware and software news ${new Date().getFullYear()}`};
   }
   if (/^(?:have you (?:learned|learnt) anything|what (?:have|did) you (?:learn|learned|learnt)|did you (?:learn|learned) anything|what did you find out)(?:\s+(?:from (?:that|the) research|about (?:pygame|that)))?[?.!]*$/i.test(text)) return {mode:'quick', action:'learned',value:''};
+  if (isStandaloneCodeRequest(text) || isExplanatoryRequest(text)) return {mode:'chat'};
   if (isProceedFollowup(text) && lastAction && ['search','web','research','files','read','machine'].includes(lastAction.action)) {
     return {mode:'quick', action:lastAction.action, value:lastAction.value};
   }

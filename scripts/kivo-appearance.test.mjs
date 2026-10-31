@@ -9,7 +9,7 @@ import { identityResponse } from './projectmate-identity.mjs';
 import { buildChatMessages } from './projectmate-chat-context.mjs';
 
 test('v0.7.0 is Kivo and replies use the Kivo identity',()=>{
-  assert.equal(KIVO_VERSION,'0.7.0');
+  assert.equal(KIVO_VERSION,'0.8.2');
   assert.match(identityResponse('who are you?'),/Kivo/);
   assert.doesNotMatch(identityResponse('who are you?'),/ProjectMate/);
   assert.match(buildChatMessages({prompt:'hi'})[0].content,/You are Kivo/);

@@ -3,16 +3,18 @@ setlocal EnableExtensions DisableDelayedExpansion
 cd /d "%~dp0"
 title KivoAI - Windows Setup
 
-rem KivoAI Windows installer / guided setup (v0.7.0).
+rem KivoAI Windows installer / guided setup (v0.8.0).
 rem Uses Windows Package Manager (winget) and the Ollama CLI.
 rem Never downloads or executes a remote script, deletes models, or replaces memory.
 
 set "CHAT_MODEL=hf.co/mradermacher/Kimi-VL-A3B-Instruct-GGUF:Q2_K"
 set "CODING_MODEL=qwen2.5-coder:7b"
+set "SMART_MODEL=qwen3.5:4b"
 set "NODE_OK=0"
 set "OLLAMA_OK=0"
 set "CHAT_OK=0"
 set "CODE_OK=0"
+set "SMART_OK=0"
 
 cls
 echo.
@@ -27,6 +29,7 @@ echo      - Node.js 22+  (required)
 echo      - Ollama       (required)
 echo      - Kimi Q2      (chat model, approx. 6.6 GB)
 echo      - Qwen Coder 7B (optional, approx. 4.7 GB)
+echo      - Qwen3.5 4B (optional smart chat, approx. 3.4 GB)
 echo      - Python / Pygame (optional coding extras)
 echo.
 echo    It uses official winget packages and Ollama's model registry.
@@ -70,10 +73,38 @@ echo [4/5] Setting up your AI models...
 call :chatModel
 if errorlevel 1 goto setupIncomplete
 call :codingModel
+call :smartModel
 
 echo.
 echo [5/5] Optional Python tools...
-call :pythonExtras
+call rem Qwen3.5 4B is an optional stronger chat/planning model. It is never pulled silently.
+:smartModel
+ollama show "%SMART_MODEL%" >nul 2>&1
+if not errorlevel 1 (
+  echo Optional Qwen3.5 smart model is already installed.
+  set "SMART_OK=1"
+  exit /b 0
+)
+echo.
+echo OPTIONAL: Qwen3.5 4B improves complex questions and agent planning.
+echo The additional download is approximately 3.4 GB plus overhead.
+echo Kivo automatically discovers this model on its next launch.
+choice /C YN /N /M "Download Qwen3.5 4B smart model? [Y/N]: "
+if errorlevel 2 exit /b 0
+ollama pull "%SMART_MODEL%"
+if errorlevel 1 (
+  echo The optional smart-model download failed. Kivo still works.
+  exit /b 0
+)
+ollama show "%SMART_MODEL%" >nul 2>&1
+if errorlevel 1 (
+  echo Could not verify optional smart model. Kivo still works.
+  exit /b 0
+)
+set "SMART_OK=1"
+exit /b 0
+
+:pythonExtras
 
 echo.
 echo    ===================================================
@@ -84,6 +115,7 @@ echo KivoAI files: %~dp0
 echo Chat model:  %CHAT_MODEL%
 if "%CODE_OK%"=="1" echo Optional coding model available: %CODING_MODEL%
 if not "%CODE_OK%"=="1" echo Optional coding model not downloaded by this setup
+if "%SMART_OK%"=="1" echo Optional smart reasoning model available: %SMART_MODEL%
 
 echo.
 echo TO START KIVO:
@@ -96,6 +128,7 @@ echo       kivo.cmd --model %CHAT_MODEL% --speed balanced
 echo.
 echo Once Kivo opens, try /help, /version, /memory and /code.
 echo For coding: /coding-model %CODING_MODEL%
+echo For smarter responses: /smart on   ^&   /smart model %SMART_MODEL%
 echo To use project files: /review followed by /code [your task].
 echo.
 echo Your existing data stays in %%USERPROFILE%%\.projectmate-kimi.

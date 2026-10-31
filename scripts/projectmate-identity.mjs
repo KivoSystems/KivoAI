@@ -1,10 +1,13 @@
 /** Factual self-description should not rely on a heavily quantised small model. */
 export function identityResponse(prompt) {
   const text=String(prompt).toLowerCase().replace(/[’]/g,"'").replace(/[^a-z0-9'? ]+/g,' ').trim();
+  if (/^(?:(?:can|could|would) you (?:please )?)?(?:tell me (?:everything|all) about (?:you|yourself)|tell me about yourself|describe yourself|what can you (?:do|help with))(?:\?)?$/.test(text)) {
+    return "I'm Kivo, a local AI assistant that runs through Ollama using an installed model such as Kimi or Qwen. I can help with programming, reviewing source files, planning edits, searching public webpages, and checking code. I can store project notes and preferences locally when enabled, but that isn't the same as retraining my model. I may make mistakes, especially with smaller models, so I should verify tool results and ask before changing files or running untrusted commands. You can use /help, /status, /memory, /smart and /context to see how I'm configured.";
+  }
   if (/^(?:wait so |so )?(?:what (?:do you think you are|are you|kind of (?:thing|ai) are you)|who are you|are you (?:a )?(?:bot|ai|human|person|robot)|(?:you're|you are) (?:a )?(?:human|person|bot|ai))(?:\?)?$/.test(text)) {
     if (/\b(?:you are|you're) (?:a )?(?:human|person)/.test(text))
       return "I'm an AI assistant, not a human — but I'm here to help!";
-    return "I'm Kivo, a local AI assistant powered by Kimi. I'm software, not a human, and I can help with chatting, coding and tools.";
+    return "I'm Kivo, a local AI assistant using Ollama and your installed models. I'm software, not a human, and I can help with chatting, coding and tools.";
   }
   return null;
 }

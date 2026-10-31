@@ -1,8 +1,55 @@
-# Kivo v0.7.0 — New name and geometric avatar
+# KivoAI Windows guided installer
+
+For a first-time Windows installation, **double-click `installer.bat`** after extracting the full release ZIP. It checks Node.js and Ollama, offers to download the Kimi Q2 chat model and optional Qwen coding model, and prints launch instructions. It asks before downloading software or models, and preserves existing memories. See [`INSTALLATION.md`](INSTALLATION.md) for requirements, manual setup and troubleshooting.
+
+---
+
+# Kivo v0.8.2 — Chat Routing & Reliable Memory
 
 Kivo is the renamed local developer AI previously called ProjectMate. Launch with `kivo.cmd` or `kivo.ps1` (Windows). Existing `projectmate.cmd` shortcuts remain supported. The underlying local Ollama model (including Kimi) is unchanged.
 
 New terminal styling: violet/coral/gold **prism** palette (default), plus `/theme sunset`, `/theme garden`, `/theme mono`. Avatar shapes: `/avatar prism`, `/avatar orbit`, `/avatar bloom`. Changes are stored locally in `appearance.json`; no graphics packages or online assets required. The mascot is Unicode terminal art, not a new image model.
+
+
+## v0.8.2 — Chat Routing & Reliable Memory
+
+- **Direct explanations:** Pygame/Python debugging questions now go straight to chat rather than a file-editing agent planner.
+- **Standalone code answers:** “Write a Python function…” uses the installed coding model, without creating or changing files.
+- **Memory recall:** Questions such as “Do I prefer snippets or full source?” are answered from actual saved preferences, without hallucinated model guesses.
+- **Compact prompts keep relevant memory:** a short context window no longer silently strips user preferences.
+- **Clearer fixed-context warning:** `/context cap` alone does not raise a fixed 1024-token window. Run `/context auto`, `/context base 2048`, then `/context cap 8192` as separate commands.
+- **Safer chat:** rejects malformed email-header-style model narration.
+
+Existing local memories, installed models and projects remain compatible. Kivo still asks before file changes. The model can still make reasoning mistakes; these changes fix routing and memory-retrieval defects.
+
+## v0.8.1 — Prompt & Context Guard
+
+Kivo now shortens its own instructions when small context windows cannot fit the full prompt, filters system-instruction echoes, and directly explains its own capabilities. No changes to saved memories, installed models or permissions.
+
+## v0.8.0 — Smarter answers, safer development
+
+Kivo now has **Smart Routing**. It keeps the original Kimi Q2 chat model for short casual messages but uses an installed stronger model for complex questions and agent planning. This does **not** train or modify any model weights, and no model is downloaded without your choice.
+
+Recommended optional models for a PC with an 8 GB GPU:
+
+```cmd
+ollama pull qwen3.5:4b
+ollama pull qwen2.5-coder:7b
+```
+
+The first is the optional 3.4 GB smart chat/planning model; the second is the optional 4.7 GB coding specialist. With extra available memory, `qwen3.5:9b` (~6.6 GB) can give a larger smart model but might exceed GPU capacity at high context sizes and become slow.
+
+Inside Kivo:
+
+```text
+/smart
+/smart on
+/smart model qwen3.5:4b
+/coding-model qwen2.5-coder:7b
+/context cap 8192
+```
+
+Kivo detects installed preferred smart models on startup. `/smart off` keeps normal chat on Kimi. Source editing now offers a **single validation-guided retry** when the first AI file is malformed, then rejects the file if it still fails. Passing a syntax check does not prove the software works: run project tests and inspect proposed edits before typing APPLY. No autonomous writes or shell executions were added.
 
 **Upgrade compatibility:** For existing installs, Kivo intentionally continues using `%USERPROFILE%\.projectmate-kimi\` for history, memory, settings and backups. This legacy storage path and the older `PROJECTMATE_KIMI_HOME` and `PROJECTMATE_OLLAMA_URL` environment variables are intentionally preserved. An optional `KIVO_HOME` override is supported. Existing `ProjectMateProjects` folders are detected before making a new `KivoProjects` folder. Do not delete your old data directory.
 
