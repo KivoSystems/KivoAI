@@ -25,7 +25,7 @@ Start with **UPGRADE-v0.6.0.txt**.
 ## Requirements
 - Windows 10/11, **Node.js 22 or newer** (Node.js 24 is fine)
 - **Ollama for Windows**, running on `http://127.0.0.1:11434`
-- An installed Kimi model. For an RTX 4060 Ti **8 GB**, the smaller quantisation is a more practical starting point than the 11 GB Q4 model. CUDA is automatic in the normal Ollama Windows installation.
+- An installed Kimi model. For an DECENT GPU (E.G a RTX 4060 Ti **8 GB**), the smaller quantisation is a more practical starting point than the 11 GB Q4 model. CUDA is automatic in the normal Ollama Windows installation.
 
 ## Installation
 
