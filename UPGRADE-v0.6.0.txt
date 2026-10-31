@@ -1,0 +1,78 @@
+PROJECTMATE v0.6.0 — CODING AGENT + SELECTIVE MEMORY
+===================================================
+
+A local coding companion built on the lightweight ProjectMate CLI, backed by
+Ollama. This DOES NOT contain GPT-6 weights or ChatGPT's private reasoning.
+It also is NOT the complete original Kimi Code CLI engine.
+
+NEW FEATURES
+- /code TASK: index up to 150 real source files, plan up to three related
+  code changes, require PLAN before generation and APPLY for each write.
+- /review QUESTION: read-only repository review using your chosen coding model.
+- /verify: check syntax in Python, JavaScript and JSON files WITHOUT executing
+  the program (not a replacement for integration or unit tests).
+- /coding-model MODEL_NAME: optional separate local coding model. The chat
+  model remains genuine Kimi. The coding-model choice persists on disk.
+- /memory ask|auto|off: selective, model-suggested long-term memory. Defaults
+  to ask, and requires SAVE. Auto saves only filtered technical facts/preferences.
+- /memory list|forget ID|clear: inspect and delete saved personal memory.
+- /undo can restore several edits from this session, one at a time, most recent first.
+- Better validators for JSON and JavaScript, as well as Python.
+- Retains /search, /web, /shell, /learn, notes, approval controls, and local history.
+
+INSTALL
+1. Close existing ProjectMate.
+2. Extract ProjectMate-Kimi-Windows-v0.6.0-Dev-Agent.zip into Downloads,
+   OVER the existing ProjectMate-Kimi-Windows folder. Do not delete your
+   .projectmate-kimi home directory; that's where memory/notes are stored.
+3. Launch:
+     cd /d "%USERPROFILE%\Downloads\ProjectMate-Kimi-Windows"
+     projectmate.cmd --model hf.co/mradermacher/Kimi-VL-A3B-Instruct-GGUF:Q2_K --speed balanced
+4. Inside CLI: /version, /review, /code, /memory, /verify, /help.
+
+OPTIONAL CODING SPECIALIST
+The existing Kimi model is retained for chat. Kimi-VL-A3B at low-bit Q2
+has repeatedly struggled to write accurate code and make reliable tool plans.
+You can optionally add a separate coding model (download required once):
+     ollama pull qwen2.5-coder:7b
+Inside ProjectMate:
+     /coding-model qwen2.5-coder:7b
+Or set it at launch with --coding-model qwen2.5-coder:7b.
+This optional model is ~4.7GB according to Ollama's model library. Test VRAM
+usage with ollama ps; graphics apps and context sizes change available memory.
+
+EXAMPLE WORKFLOW
+     /review Identify how my Unity project is organised
+     /code Fix the Python errors and add a regression test
+     (type PLAN for plan approval, then APPLY for each file you accept)
+     /verify
+     /shell git diff --stat       (will request RUN unless approved trusted command)
+     /undo                        (repeat as needed)
+
+MEMORY CONTROLS
+     /memory             show active memory setting
+     /memory ask         default: propose a useful long-term fact, confirm SAVE
+     /memory auto        save screened technical memories selected by AI
+     /memory off         disable recall and memory suggestions
+     /memory list        inspect saved facts
+     /memory forget ID   delete one
+     /memory clear       erase all after CLEAR confirmation
+Memories are small local text records in ~/.projectmate-kimi/memory.json;
+they are not neural-network training, and may be imperfect. Do not store
+passwords, identity data, or sensitive information in AI memory. Webpage
+content remains untrusted source data and cannot change approval policy.
+
+LIMITATIONS & SAFETY
+- Local Kimi Q2 may still produce nonsense. A coding-specialist model often
+  improves code quality, but cannot guarantee perfect results.
+- The planner handles at most 3 files per task and excerpts rather than a
+  whole giant codebase. Large files must be split or edited in smaller steps.
+- Every proposed write requires APPLY. Approved command execution uses RUN
+  unless it matches the narrow trusted allowlist. No arbitrary autonomous
+  shell execution or external system-wide file writes.
+- /verify checks syntax only. Test commands can execute project code and should
+  be reviewed before approving /shell.
+- Backups are written locally by Workspace; /undo is session-scoped.
+- Data remains local except when you explicitly use web/search/research.
+- Automated tests and simulated Ollama integration passed; live Windows
+  inference with your actual Kimi model has not been verified in this build.

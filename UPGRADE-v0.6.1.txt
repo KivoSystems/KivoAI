@@ -1,0 +1,38 @@
+ProjectMate 0.6.1 — Adaptive Tools & Context
+============================================
+
+New features
+------------
+- `/plan <task>`: ask the coding model which available tools to use and estimate a context window, without running those tools. Invalid/unrequested tool suggestions are rejected.
+- `/agent <task>`: model can request one bounded `expand_context` operation while planning, then continue to choose tools. This is not command approval.
+- Adaptive context auto mode (default): each chat, coding, and tool-plan request estimates its needed context and sets Ollama `options.num_ctx` accordingly. The original base context is 1,024 tokens; the default cap is 8,192.
+- Older chat messages can be omitted when the prompt budget is tight; current user instruction and system rules are retained.
+- File-write and shell approval rules unchanged: APPLY for edits; RUN for commands outside narrowly trusted read-only commands.
+
+Commands
+--------
+/context               Show mode, base, cap, last decision
+/context auto          Automatically select context window per request (default)
+/context fixed         Always use the base context (manual)
+/context base 2048     Set minimum/base context
+/context cap 8192      Limit maximum dynamic context
+/plan inspect my code and fix errors
+/agent inspect project, read the entry file and explain it
+
+Startup example (PowerShell)
+----------------------------
+.\projectmate.cmd --model hf.co/mradermacher/Kimi-VL-A3B-Instruct-GGUF:Q2_K --context 1024 --context-max 8192 --speed balanced
+
+Optional coding model:
+  ollama pull qwen2.5-coder:7b
+  /coding-model qwen2.5-coder:7b
+
+Notes and limitations
+---------------------
+- `num_ctx` is Ollama's actual inference context-window setting, not a neural-model training update. See Ollama's `/api/chat` options.
+- The token estimator is approximate. Large prompts can be refused (for file generation) instead of silently saving changes without enough context.
+- Larger contexts consume more RAM/VRAM; the 8GB RTX 4060 Ti may slow down or partly offload to system memory at higher settings.
+- A Q2-quantised Kimi model can make bad plans; plans are suggestions and never directly authorise writes or command execution.
+- Context auto/fixed and base/cap changes are saved in `%USERPROFILE%\.projectmate-kimi\context-settings.json`. Explicit --context or --context-max startup flags override saved amounts for that launch.
+- This is the lightweight local ProjectMate CLI, not the full upstream Kimi Code engine.
+- Live model inference on the user's Windows PC remains unverified; all listed tests are local automated/simulated checks.

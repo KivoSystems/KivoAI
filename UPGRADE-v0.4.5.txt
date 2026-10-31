@@ -1,0 +1,22 @@
+PROJECTMATE v0.4.5 — AUTOMATIC WEB ROUTING & REPLY-LOOP FIX
+
+Fixed:
+- "Check YouTube for cool new tech" now performs a real public web search.
+- Returns searchable video titles and HTTPS links. The app does NOT watch video content.
+- Follow-ups such as "can you do that for me right now?" can reuse the last safe tool action.
+- Repetitive/mirrored chat replies trigger one clean-context retry and are not saved if still broken.
+- Existing repetitive assistant turns are excluded from AI prompt context (local history is kept until /clear).
+- Search results are shown without requiring a small Q2 model to invent a summary.
+- Search links are validated; local-network and non-HTTPS URLs are excluded.
+
+Install:
+1. Extract this ZIP over your existing Downloads\\ProjectMate-Kimi-Windows folder.
+2. Run:
+   cd "%USERPROFILE%\\Downloads\\ProjectMate-Kimi-Windows"
+   projectmate.cmd --model hf.co/mradermacher/Kimi-VL-A3B-Instruct-GGUF:Q2_K --speed balanced
+3. Inside ProjectMate, type /clear once to discard the old looping chat.
+4. Try: check YouTube for cool new tech releases this month
+
+No model reinstall, no paid API, no change to Ollama or the project notes.
+Notes: The search engine may rate-limit. Web search uses public indexed pages, not YouTube's official API, and the AI cannot view or play the videos.
+Verified: automated routing, reply safety, file/web validation, and existing launcher tests. Real Windows + local Kimi response quality remains hardware-dependent.

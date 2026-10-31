@@ -1,0 +1,32 @@
+ProjectMate v0.5.1 — Learning/Loop Diagnostics
+
+Extract this ZIP into the Downloads directory, replacing the existing
+ProjectMate-Kimi-Windows folder's files. STOP the old ProjectMate terminal
+process and start a new one so the changed JS modules are loaded.
+
+Check the build from a Windows CMD prompt:
+  cd /d "%USERPROFILE%\Downloads\ProjectMate-Kimi-Windows"
+  node scripts\projectmate-cli.mjs --version
+Expected output: ProjectMate 0.5.1
+
+Then launch:
+  projectmate.cmd --model hf.co/mradermacher/Kimi-VL-A3B-Instruct-GGUF:Q2_K --speed balanced
+
+Inside ProjectMate:
+  /version
+  /clear
+  /learn list
+  have you learnt anything?
+
+Changes:
+- Adds visible /version and --version to help diagnose installs that didn't update.
+- Uses saved lessons, not model speculation, to answer what was learned.
+- Rejects site-error/placeholder excerpts during public research.
+- Retains v0.5.0 streaming repetition guard for ordinary chat.
+- Does not delete saved models, projects, or existing lessons.
+
+Important: v0.5.1 can reject future bad research notes, but it does not
+remove existing useless notes. Review them with /learn list and delete
+individual ones with /learn forget ID.
+
+Model limitation: very low quantisation can still affect answer quality.

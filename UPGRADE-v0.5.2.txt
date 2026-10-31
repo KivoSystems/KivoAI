@@ -1,0 +1,20 @@
+ProjectMate v0.5.2 — Real Code & Honest Memory
+
+Fixes demonstrated by the user's exact Pygame transcript:
+- Rejects natural-language descriptions masquerading as .py files.
+- Validates Python syntax via Python's ast.parse (no generated source is executed).
+- For requested Pygame games, checks imports, game loop, event/QUIT handling, and display updates.
+- If local Kimi fails a generic platformer request, explicitly offers a bundled 960x540 playable Pygame starter instead. User must still type APPLY.
+- Can repair an existing obviously broken prose-only .py file when you ask /edit, still with approval.
+- Rejects AI messages like "The user is asking..." as internal task narration.
+- Routes "learn how to use pygame" to public research instead of inventing an answer.
+- Routine web searches no longer auto-create low-value learning notes. Explicit /research can still save sourced, substantive excerpts.
+- "Have you done it?" reports what has actually been saved in the current session and never claims tests ran.
+- All 84 automated tests passed; one interactive stub-Ollama test passed. The live Kimi Q2 response has not been tested on your Windows PC.
+
+Requirements: Node.js 22+, Ollama running locally. Python 3 is needed for .py syntax verification, and pygame is needed to run the sample game.
+
+Previous bad files and old memory notes are NOT deleted by this update.
+After launch: /version should say ProjectMate 0.5.2.
+For the old main.py, if its content was plain English, use /edit main.py turn this into a complete pygame platformer. Inspect the diff and approve with APPLY.
+Run a game: py -3 -m pip install pygame, then py -3 main.py (inside your selected project directory).

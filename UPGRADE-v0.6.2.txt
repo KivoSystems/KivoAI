@@ -1,0 +1,7 @@
+Kivo v0.6.2 - Direct Memory Routing Fix
+
+Issue: v0.6.1 sent explicit natural-language memory requests into the general AI agent planner, which offered no memory-writing tool. The model expanded its context then failed to plan.
+
+Fix: Typed requests such as "can you update your memory that my name is Zak and i am a young developer" now save their user-supplied fact directly (no AI/tool planner needed). `/memory remember FACT` is available explicitly. `/memory list`, `/memory forget ID`, `/memory clear`, `/memory ask|auto|off` remain supported. A saved name will be included as relevant context for later chats and can be recalled with "what's my name?". New names replace earlier saved name records. Auto mode still does not independently collect personal identity details. Sensitive or dangerous memory content is refused.
+
+Install: Close Kivo and extract this update ZIP into Downloads, overwriting the existing Kivo-Kimi-Windows directory. Launch and use `/version` to confirm v0.6.2. Memories, project files, and local Ollama models are retained.

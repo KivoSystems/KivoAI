@@ -1,0 +1,18 @@
+ProjectMate v0.4.7 / Brain Edition
+
+This is NOT an extraction of ChatGPT weights or hidden reasoning. It is a compact set of
+explicit, editable behaviour instructions plus application routing improvements.
+
+Includes:
+- ~/.projectmate-kimi/brain.md created on first run; type /brain to locate it
+- Natural language searches go straight to the search tool, with real query terms
+- Explicit Python/Pygame file requests route to safe /new with APPLY approval
+- More tokens reserved for file creation, not chat; file tasks use 4096 context
+- Repeated-line and unfinished-placeholder checks before proposing writes
+- Original safety approvals for shell and file writes retained
+
+Install: extract over your ProjectMate-Kimi-Windows folder, then launch projectmate.cmd
+with your usual --model. Your saved model and project notes remain untouched.
+
+Tip: Kimi Q2 still has inherent reasoning and coding limitations; a prompt cannot upgrade
+its neural weights. For demanding code, consider a stronger local coding model separately.

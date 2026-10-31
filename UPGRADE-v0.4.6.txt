@@ -1,0 +1,15 @@
+PROJECTMATE v0.4.6 — SAFER AGENT + SEARCH FALLBACK + CHAT CLARITY
+
+Fixes:
+- "can you search yt for new tech" is now a direct read-only search, not a planning prompt.
+- /agent checks a task-based allowlist before executing any action. Edits/writes and shell actions only allowed when user explicitly requests them, and still require APPLY/RUN approval.
+- DDG HTTP 202 challenges and parser failures trigger a Bing RSS fallback. If both fail, ProjectMate prints a clickable external search URL *without claiming to have retrieved results*.
+- Search hits for YouTube questions must actually be YouTube video links.
+- Factual identity questions use a stable answer; false bot/human claims and repeated loops are blocked from saved prompt context.
+- NO change to installed Kimi weights, local notes, or existing projects.
+
+Install: Close ProjectMate, extract ZIP into Downloads, overwrite existing ProjectMate-Kimi-Windows files. Start with:
+  projectmate.cmd --model hf.co/mradermacher/Kimi-VL-A3B-Instruct-GGUF:Q2_K --speed balanced
+Use /clear once to remove prior nonsensical history.
+
+Tests run on Linux with mocked search and local-model responses; live Kimi and web access need on-machine validation.

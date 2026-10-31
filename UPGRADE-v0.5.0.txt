@@ -1,0 +1,10 @@
+ProjectMate v0.5.0 — Conversation Loop Guard
+
+1. Close ProjectMate (do not stop Ollama).
+2. Extract this ZIP into Downloads, OVERWRITING files in the existing ProjectMate-Kimi-Windows directory.
+3. Run in CMD:
+   cd /d "%USERPROFILE%\Downloads\ProjectMate-Kimi-Windows"
+   projectmate.cmd --model hf.co/mradermacher/Kimi-VL-A3B-Instruct-GGUF:Q2_K --speed balanced
+4. Optionally type /clear to discard the broken old conversation; notes and lessons stay.
+
+This release blocks repeating multiword phrases, aborts chat generation early on a detected loop, retries with a clean short prompt, and discards persistent poisoned replies. Web commands and editing safeguards are unchanged. The local Kimi model is not modified.

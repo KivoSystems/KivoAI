@@ -1,0 +1,16 @@
+ProjectMate Windows CUDA v0.4.4 — Chat Focus Fix
+
+Fixes unrelated Raspberry Pi / maker-project monologues when you just say hello.
+Your existing maker profile is still available for relevant project questions.
+Your Kimi model and Ollama installation do NOT need changing.
+
+Installation:
+  1. Extract this ZIP into Downloads.
+  2. Replace files in the existing ProjectMate-Kimi-Windows folder.
+  3. Run:
+     projectmate.cmd --model hf.co/mradermacher/Kimi-VL-A3B-Instruct-GGUF:Q2_K
+  4. Type /clear if you'd like to remove stale conversation history.
+  5. Type hello and check that ProjectMate just greets you.
+
+Verification: Local automated tests for prompt focus and existing CLI/launcher pass.
+Actual local Kimi model response quality depends on its quantisation.

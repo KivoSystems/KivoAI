@@ -1,0 +1,11 @@
+ProjectMate Windows CUDA v0.4.3 — Node.js path quoting fix
+
+Fixes: 'C:\Program' is not recognized as an internal or external command.
+
+Unzip over the existing ProjectMate-Kimi-Windows folder, replacing files.
+No changes to downloaded models or local history.
+
+Launch from Command Prompt:
+  projectmate.cmd --model hf.co/mradermacher/Kimi-VL-A3B-Instruct-GGUF:Q2_K
+
+Your Node.js installation under C:\Program Files is supported.

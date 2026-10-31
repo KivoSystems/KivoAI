@@ -1,0 +1,18 @@
+ProjectMate v0.4.8 — Trust & Learning Edition
+
+Changes:
+- /permissions ask|trusted — persistent local setting. 'trusted' only auto-runs a strict allowlist of read-only shell commands (for example git status, git diff --stat, Get-ChildItem, node --version). Potentially destructive or arbitrary commands still ask for RUN approval.
+- /learn on|off — controls retrieval and automatic memory capture from tool failures and public web research (default on).
+- /learn correction <text> — explicitly teach ProjectMate a correction.
+- /learn success <text> — save a user-confirmed solution.
+- /learn web https://... — store short web-source reference (data only; never executable instructions).
+- /learn list, /learn forget <id>, /learn clear — review, remove one memory or erase all.
+- Local persistence: %USERPROFILE%\.projectmate-kimi\lessons.json and preferences.json (actual path determined by HOME in the app).
+- Relevant memory is retrieved selectively; outdated web references expire from retrieval after 7 days.
+- No training or changes to neural network weights. Source titles and excerpts may be inaccurate; check before relying on them.
+
+Installation: replace your existing ProjectMate-Kimi-Windows files with the contents of this ZIP. No model download needed.
+Start: projectmate.cmd --model hf.co/mradermacher/Kimi-VL-A3B-Instruct-GGUF:Q2_K
+Then type /permissions trusted and /learn to see the new controls.
+
+Security: ProjectMate can run shell commands as the user's account. Don't run it as Administrator. The trusted allowlist is intentionally small. Downloaded websites and learned notes cannot grant themselves permissions. Writing files always prompts for APPLY.

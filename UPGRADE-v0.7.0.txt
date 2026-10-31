@@ -1,0 +1,4 @@
+Kivo v0.7.0 - renamed from ProjectMate; new geometric terminal mascot and theme presets.
+New: kivo.cmd, kivo.ps1; /avatar prism|orbit|bloom; /theme prism|sunset|garden|mono.
+Legacy launchers, existing memories, model configs, and .projectmate-kimi storage are retained.
+Includes v0.6.2 explicit memory fix.

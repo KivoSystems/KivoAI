@@ -1,0 +1,38 @@
+ProjectMate v0.4.9 — Research That Actually Learns
+================================================
+
+Fixes a real reported failure:
+  "can you learn from pypame forums online?"
+previously made the tool planner hallucinate a file.py and then repeat errors.
+
+Changes:
+- Deterministically routes explicit internet-learning requests to research.
+- Corrects common typo "pypame" to "pygame".
+- Uses actual user search terms, not placeholder tool examples.
+- Attempts to READ relevant public pages and stores short linked excerpts if /learn is on.
+- If search/pages are blocked, truthfully reports that nothing was learned.
+- Web-only requests cannot trigger file/shell tools in the AI planner.
+- Repeated failing agent tool operations stop rather than pollute the summary.
+- /research TOPIC and /learn research TOPIC added.
+- Research notes remain reviewable/deletable with /learn list, /learn forget ID,
+  /learn clear. Existing lessons and model weights are not modified by upgrade.
+
+Requirements: Node.js 22+, Ollama with an already-installed Kimi model.
+Install: extract this archive OVER your existing ProjectMate-Kimi-Windows folder.
+No re-download of Ollama or model weights is necessary.
+
+Startup (CMD):
+  cd /d "%USERPROFILE%\Downloads\ProjectMate-Kimi-Windows"
+  projectmate.cmd --model hf.co/mradermacher/Kimi-VL-A3B-Instruct-GGUF:Q2_K --speed balanced
+
+Try:
+  /learn on
+  can you learn from pypame forums online?
+  /learn list
+  /research pygame platformer help discussions
+
+Learning means retrieving sourced notes. It does not retrain Kimi or
+turn untrusted website text into trusted instructions.
+
+Automated tests: 67 passed on Linux Node 22. Live Windows + Ollama +
+public web research not verified here.
